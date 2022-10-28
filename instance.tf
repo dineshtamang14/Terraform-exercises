@@ -1,4 +1,4 @@
-# jenkins server setup
+# jenkins, nexus and sonar server setup
 resource "aws_instance" "vms-servers" {
   for_each          = toset(var.VMS)
   ami               = var.AMIS[each.key]
