@@ -33,3 +33,34 @@ echo 'run_as_user="nexus"' > /opt/nexus/$NEXUSDIR/bin/nexus.rc
 systemctl daemon-reload
 systemctl start nexus
 systemctl enable nexus
+
+# nginx installation for reverse proxy
+amazon-linux-extras install nginx1 -y
+rm -rf /etc/nginx/conf.d/default.conf
+cat <<EOT> /etc/nginx/conf.d/default.conf
+proxy_cache_path /tmp/nginx_cache/ keys_zone=name:10m;
+
+upstream nexus {
+  ip_hash;
+  server localhost:8081;
+}
+
+server{
+    listen 80;
+    listen [::]:80;
+    server_name _;
+
+    location / {
+        client_max_body_size 80M;
+        proxy_pass http://nexus;
+        proxy_cache name;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+EOT
+systemctl start nginx.service
+systemctl enable nginx.service
