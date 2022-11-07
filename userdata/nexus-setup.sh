@@ -38,10 +38,6 @@ systemctl enable nexus
 amazon-linux-extras install nginx1 -y
 rm -rf /etc/nginx/conf.d/default.conf
 cat <<EOT> /etc/nginx/conf.d/default.conf
-proxy_cache_path  /tmp/nginx_cache levels=1:2 keys_zone=my-cache:10m max_size=1000m inactive=600m;
-proxy_temp_path /tmp/cache/tmp; 
-
-
 upstream nexus {
   server localhost:8081;
 }
@@ -53,14 +49,6 @@ server{
 
     location / {
       proxy_pass http://nexus;
-      proxy_cache my-cache;
-      proxy_set_header Host \$host;
-      proxy_set_header X-Real-IP \$remote_addr;
-      proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-      proxy_ignore_headers Set-Cookie; 
-      proxy_ignore_headers Cache-Control; 
-      proxy_cache_bypass \$http_secret_header;
-      add_header X-Cache-Status \$upstream_cache_status;
     }
 }
 EOT
