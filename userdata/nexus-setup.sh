@@ -1,4 +1,5 @@
 #!/bin/bash
+yum update -y
 yum install java-1.8.0-openjdk.x86_64 wget -y   
 mkdir -p /opt/nexus/   
 mkdir -p /tmp/nexus/                           
@@ -37,6 +38,7 @@ systemctl enable nexus
 # nginx installation for reverse proxy
 amazon-linux-extras install nginx1 -y
 rm -rf /etc/nginx/conf.d/default.conf
+
 cat <<EOT> /etc/nginx/conf.d/default.conf
 upstream nexus {
   server localhost:8081;
