@@ -1,6 +1,6 @@
 # security group creation for ec2 instance 
 resource "aws_security_group" "terraform_ec2_sg" {
-    name = "terraform_sg"
+    name = "${var.sg_name}"
     description = "allowing only ssh"
     vpc_id = "${var.vpc_id}"
 

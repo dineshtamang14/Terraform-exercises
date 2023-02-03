@@ -1,10 +1,17 @@
-# Terraform module
+# Terraform Workspace
+# what is workspace ?
+Ans => `workspace is same as Environment`
+        `like dev Env, prod Env, QA Env`
 
-# To use project as a module
+# To create a workspace or Environment
+`terraform workspace new staging` # new means creating a new workspace
 
-module "ec2_module" {
-    source = "./ec2_module"
-}
+# always first create a workspace then a module 
+`terraform workspace new production`
 
-# always initiate the module after importing it
-`terraform init`
+
+# To list out all the workspace
+`terraform workspace list`
+
+# switching between workspace
+`terraform workspace select staging`
