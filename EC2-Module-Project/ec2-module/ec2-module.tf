@@ -1,11 +1,3 @@
-provider "aws" {  # Recommended way of defining provider
-    region = "us-east-1"
-    shared_config_files      = ["~/.aws/config"]
-    shared_credentials_files = ["~/.aws/credentials"]
-    // profile = "Dinesh-Tamang"
-}
-
-
 # security group creation for ec2 instance 
 resource "aws_security_group" "terraform_ec2_sg" {
     name = "terraform_sg"
@@ -32,16 +24,16 @@ resource "aws_security_group" "terraform_ec2_sg" {
 }
 
 # creating key-pair for ec2 instance
-resource "aws_key_pair" "dove-key" {
-    key_name = "dove-key"
-    public_key = file("dovekey.pub")
+resource "aws_key_pair" "keyPair" {
+    key_name = "dovekey"
+    public_key = file("~/.ssh/dovekey.pub")
 }
 
 # creating ec2 instance
 resource "aws_instance" "web" {
     ami = var.ami
     instance_type = "t2.micro"
-    key_name = aws_key_pair.dove-key.key_name
+    key_name = aws_key_pair.keyPair.key_name
     vpc_security_group_ids = [aws_security_group.terraform_ec2_sg.id]
 
     tags = {
