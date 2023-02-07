@@ -3,5 +3,3 @@ variable "vpc_id" {
   default     = "vpc-075e85e43a3ad0bee"
   description = "default vpc id"
 }
-
-variable "sg_name" {}

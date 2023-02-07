@@ -1,6 +1,11 @@
+# importing module of shared variable
+module "shared-vars" {
+  source = "../shared-vars"
+}
+
 # security group creation for ec2 instance 
 resource "aws_security_group" "terraform_ec2_sg" {
-    name = "${var.sg_name}"
+    name = "sg_name_${module.shared-vars.env_suffix_output}"
     description = "allowing only ssh"
     vpc_id = "${var.vpc_id}"
 

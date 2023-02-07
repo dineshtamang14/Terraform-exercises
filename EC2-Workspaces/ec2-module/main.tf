@@ -4,6 +4,11 @@ resource "aws_key_pair" "keyPair" {
     public_key = file("~/.ssh/dovekey.pub")
 }
 
+# importing module of shared variable
+module "shared-vars" {
+  source = "../shared-vars"
+}
+
 # creating ec2 instance
 resource "aws_instance" "web" {
     ami = "${var.ami}"
@@ -12,6 +17,6 @@ resource "aws_instance" "web" {
     vpc_security_group_ids = ["${var.sg_id}"]
 
     tags = {
-        Name = "${var.ec2_name}"
+        Name = "ec2_name_${module.shared-vars.env_suffix_output}"
     }
 }

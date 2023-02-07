@@ -15,3 +15,9 @@ Ans => `workspace is same as Environment`
 
 # switching between workspace
 `terraform workspace select staging`
+
+
+# function for searching
+`amiid = "${lookup(local.amiid_env, local.env)}"`
+
+# shared Environment variable across modules

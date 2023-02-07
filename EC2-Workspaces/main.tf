@@ -16,7 +16,6 @@ provider "aws" {  # Recommended way of defining provider
 # importing sg module
 module "sg_module" {
     source = "./sg-module"
-    sg_name = "sg_ec2_${local.env}"
 }
 
 
@@ -26,6 +25,5 @@ module "ec2_module_1" {
     source = "./ec2-module/"
     # supplying a input from other module
     sg_id = "${module.sg_module.sg_id_output}"
-    ec2_name = "EC2_Instance_${local.env}"
     create_keyPair = true
 }

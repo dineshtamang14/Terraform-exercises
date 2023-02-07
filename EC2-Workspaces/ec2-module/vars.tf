@@ -7,6 +7,4 @@ variable "ami" {
 # for taking a input from user or other module
 variable "sg_id" {}
 
-variable "ec2_name" {}
-
 variable "create_keyPair" {}
