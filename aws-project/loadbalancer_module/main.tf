@@ -11,7 +11,7 @@ resource "aws_lb" "sampleapp_alb" {
   security_groups = ["${var.public_sg_id}"]
   subnets = ["${module.shared_vars.public_subnet_id}", "subnet-02d7d3fc9888b1735"]
 
-  enable_deletion_protection = true
+  enable_deletion_protection = false
 
   tags = {
     Environment = "${module.shared_vars.env_suffix}"
