@@ -21,7 +21,7 @@ resource "aws_lb" "sampleapp_alb" {
 
 # creating a target group for load balancer
 resource "aws_lb_target_group" "sampleapp_http_tg" {
-  name = "sampleapp-http-tg"
+  name = "sampleapp-http-tg-${module.shared_vars.env_suffix}"
   port = 80
   protocol = "HTTP"
   vpc_id = "${module.shared_vars.vpcid}"
@@ -29,13 +29,12 @@ resource "aws_lb_target_group" "sampleapp_http_tg" {
 
 # creating a aws load balancer listener
 resource "aws_lb_listener" "http_listener" {
-  load_balancer_arn = "${aws_lb.sample_alb.arn}"
+  load_balancer_arn = "${aws_lb.sampleapp_alb.arn}"
   port = "80"
   protocol = "HTTP"
-  ssl_policy = "ELBSecurityPolicy-2015-05"
 
   default_action {
     type = "forward"
-    target_groupt_arn = "${aws_lb_target_group.front_end.arn}"
+    target_group_arn = "${aws_lb_target_group.sampleapp_http_tg.arn}"
   }
 }
