@@ -16,3 +16,9 @@ provider "aws" {  # Recommended way of defining provider
 module "network_module" {
   source = "./network_module"
 }
+
+# importing load balancer module
+module "loadbalancer_module" {
+  source = "./loadbalancer_module"
+  public_sg_id = "${module.network_module.public_sg_id}"
+}
