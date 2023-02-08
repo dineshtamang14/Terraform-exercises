@@ -22,3 +22,9 @@ module "loadbalancer_module" {
   source = "./loadbalancer_module"
   public_sg_id = "${module.network_module.public_sg_id}"
 }
+
+# importing auto scaling group module
+module "autoscaling_module" {
+  source = "./autoscaling_module"
+  private_sg_id = "${module.network_module.private_sg_id}"
+}
