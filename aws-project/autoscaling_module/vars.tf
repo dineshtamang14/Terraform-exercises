@@ -51,3 +51,4 @@ locals {
 }
 
 variable "private_sg_id" {}
+variable "target_group" {}
